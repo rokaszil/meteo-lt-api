@@ -56,7 +56,7 @@ print("Vidutinė metų nakties temperatūra: ", round(night_temp['airTemperature
 # 2c. Lietingu savaitgaliu skaiciavimas. Itraukiamos tik tos dienos, kuriose buvo su lietumi (bet ne sniegu) susije krituliai
 rain_conditions = ['rain', 'rain-showers', 'light-rain-at-times', 'rain-at-times', 'light-rain', 'rain', 'heavy-rain', 'isolated-thunderstorms', 'thunderstorms']
 rain = observations[observations['conditionCode'].isin(rain_conditions)]
-date_list = pd.to_datetime(pd.Series(observations.index.date).drop_duplicates())
+date_list = pd.to_datetime(pd.Series(rain.index.date).drop_duplicates())
 saturdays = date_list[date_list.dt.weekday == 5].count() #sestadieniu skaicius
 sundays = date_list[date_list.dt.weekday == 6].count() # sekmadieniu skaicius
 number_of_weekends = max(saturdays, sundays)        # kadangi tiek sestadienis, tiek ir sekmadienis yra savaitgalis, imame didesni skaiciu
@@ -87,6 +87,7 @@ def interpolate (series):
     return series.resample('5min').interpolate()
     
 print("Interpoliacijos pavyzdys - oro temperatūra: ", interpolate(data_to_plot['airTemperature']))
+
 
 
 
