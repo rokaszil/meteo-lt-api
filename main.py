@@ -76,7 +76,7 @@ ax.xaxis.set_major_locator(mdates.MonthLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 ax.xaxis.set_minor_formatter(mdates.DateFormatter('%d'))
 data_to_plot = all_data[(all_data.index.date >= datetime.date(2025, 9, 3)) & (all_data.index.date <= datetime.date(2025, 9, 16))]
-data_to_plot['airTemperature'].plot(title="Oro temperatūra: matavimai ir prognozė")
+data_to_plot['airTemperature'].plot(title="Oro temperatūra: matavimai (iki 2025-09-09) ir savaitės prognozė", ylim=(0, 30))
 ax.grid(True)
 ax.tick_params(axis = 'x', which='major', pad=20, labelrotation=0)
 # plt.show()
@@ -87,5 +87,6 @@ def interpolate (series):
     return series.resample('5min').interpolate()
     
 print("Interpoliacijos pavyzdys - oro temperatūra: ", interpolate(data_to_plot['airTemperature']))
+
 
 
