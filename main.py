@@ -43,15 +43,15 @@ class meteo_data:
 # 2a. Vidutinė metų temperatūra, oro drėgmė
 
 observations = meteo_data("https://api.meteo.lt/v1").observations("kauno-ams", '2024-09-10', '2025-09-09')
-print("Vidutinė metų temperatūra: ", observations['airTemperature'].mean()) # kadangi duomenys yra vienodais intervalais, galima skaičiuoti aritmetinį vidurkį
-print("Vidutinė metų oro dregme: ", observations['relativeHumidity'].mean()) 
+print("Vidutinė metų temperatūra: ", round(observations['airTemperature'].mean(), 1)) # kadangi duomenys yra vienodais intervalais, galima skaičiuoti aritmetinį vidurkį
+print("Vidutinė metų oro dregme: ", round(observations['relativeHumidity'].mean(), 1)) 
  
 # 2b. Vidutinė metų dienos ir nakties temperatūra
 
 day_temp =  observations[(observations.index.time >= datetime.time(8, 0, 0)) & (observations.index.time <= datetime.time(20, 0, 0))]
 night_temp = observations[(observations.index.time < datetime.time(8, 0, 0)) | (observations.index.time > datetime.time(20, 0, 0))]
-print("Vidutinė metų dienos temperatūra: ", day_temp['airTemperature'].mean())
-print("Vidutinė metų nakties temperatūra: ", night_temp['airTemperature'].mean())
+print("Vidutinė metų dienos temperatūra: ", round(day_temp['airTemperature'].mean(), 1))
+print("Vidutinė metų nakties temperatūra: ", round(night_temp['airTemperature'].mean(), 1))
 
 # 2c. Lietingu savaitgaliu skaiciavimas. Itraukiamos tik tos dienos, kuriose buvo su lietumi (bet ne sniegu) susije krituliai
 rain_conditions = ['rain', 'rain-showers', 'light-rain-at-times', 'rain-at-times', 'light-rain', 'rain', 'heavy-rain', 'isolated-thunderstorms', 'thunderstorms']
@@ -87,4 +87,5 @@ def interpolate (series):
     return series.resample('5min').interpolate()
     
 print("Interpoliacijos pavyzdys - oro temperatūra: ", interpolate(data_to_plot['airTemperature']))
+
 
